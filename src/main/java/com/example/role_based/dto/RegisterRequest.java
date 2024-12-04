@@ -1,5 +1,14 @@
 package com.example.role_based.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterRequest {
     private String firstName;
     private String lastName;
@@ -7,15 +16,7 @@ public class RegisterRequest {
 
     private String password;
 
-    public RegisterRequest() {
-    }
-
-    public RegisterRequest(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+   
 
     public String getFirstName() {
         return firstName;

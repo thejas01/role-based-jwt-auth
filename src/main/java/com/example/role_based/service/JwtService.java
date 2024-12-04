@@ -42,19 +42,18 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(Object user) {
+        return generateToken(new HashMap<>());
     }
 
-    public String generateToken(
-            Map<String, Objects> extraClaims,
-            UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder()
+                .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .claim("roles", userDetails.getAuthorities())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 1 day
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(), io.jsonwebtoken.SignatureAlgorithm.HS256) // Specify the algorithm
                 .compact();
     }
 
@@ -79,6 +78,8 @@ public class JwtService {
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+        // String secretKey = "replace_this_with_your_secret_key";
+        // return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public String generateRefresh(Map<String, Objects> extraClaims, UserDetails userDetails) {
@@ -104,4 +105,9 @@ public class JwtService {
         }
         return false;
     }
-}//change at
+
+    public String generateToken(Object user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'generateToken'");
+    }
+}

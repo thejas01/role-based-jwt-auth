@@ -1,18 +1,20 @@
 package com.example.role_based.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthenticationResponse {
     
 
     private String authenticationToken;
     private String refreshToken;
 
-    public AuthenticationResponse() {
-    }
-
-    public AuthenticationResponse(String authenticationToken, String refreshToken) {
-        this.authenticationToken = authenticationToken;
-        this.refreshToken = refreshToken;
-    }
 
     public String getAuthenticationToken() {
         return authenticationToken;
